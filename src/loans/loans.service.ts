@@ -1,26 +1,57 @@
 import { Injectable } from '@nestjs/common';
 import { CreateLoanDto } from './dto/create-loan.dto';
 import { UpdateLoanDto } from './dto/update-loan.dto';
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { Loan } from './entities/loan.entity';
+import { EntityManager, EntityRepository, FilterQuery } from '@mikro-orm/core';
 
 @Injectable()
 export class LoansService {
-  create(createLoanDto: CreateLoanDto) {
-    return 'This action adds a new loan';
+  constructor(
+    @InjectRepository(Loan)
+    private readonly loanRepository: EntityRepository<Loan>,
+    private readonly entityManager: EntityManager,
+  ) {}
+
+  async create(createLoanDto: CreateLoanDto) {
+    const loan = CreateLoanDto.createFromDto(createLoanDto);
+
+    this.loanRepository.create(loan);
+    await this.entityManager.persistAndFlush(loan);
+
+    return loan;
   }
 
-  findAll() {
-    return `This action returns all loans`;
+  async find(query: FilterQuery<Loan>) {
+    return await this.loanRepository.find(query);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} loan`;
+  async findById(id: string) {
+    return await this.loanRepository.findOneOrFail({ id });
   }
 
-  update(id: number, updateLoanDto: UpdateLoanDto) {
-    return `This action updates a #${id} loan`;
+  async update(id: string, updateLoanDto: UpdateLoanDto) {
+    const loan = await this.loanRepository.findOneOrFail({ id });
+
+    if (updateLoanDto.applicantName) {
+      loan.applicantName = updateLoanDto.applicantName;
+    }
+
+    if (updateLoanDto.requestedAmount) {
+      loan.requestedAmount = updateLoanDto.requestedAmount;
+    }
+
+    if (updateLoanDto.status) {
+      loan.status = updateLoanDto.status;
+    }
+
+    await this.entityManager.flush();
+
+    return loan;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} loan`;
+  async remove(id: string) {
+    const loanRef = this.loanRepository.getReference(id);
+    await this.entityManager.removeAndFlush(loanRef);
   }
 }

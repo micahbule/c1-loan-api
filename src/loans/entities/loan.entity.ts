@@ -18,11 +18,11 @@ export class Loan {
   requestedAmount: number;
 
   @Enum(() => LoanStatus)
-  status: LoanStatus;
+  status = LoanStatus.PENDING;
 
   @Property()
-  createdAt: Date;
+  createdAt = new Date();
 
-  @Property()
-  updatedAt: Date;
+  @Property({ onUpdate: () => new Date() })
+  updatedAt = new Date();
 }
