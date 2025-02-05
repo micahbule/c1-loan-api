@@ -22,7 +22,7 @@ export class LoansService {
     return loan;
   }
 
-  async find(query: FilterQuery<Loan>) {
+  async find(query: FilterQuery<Loan> = {}) {
     return await this.loanRepository.find(query);
   }
 
