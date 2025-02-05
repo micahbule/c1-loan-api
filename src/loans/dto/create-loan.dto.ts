@@ -1,3 +1,4 @@
+import { IsNumber, IsPositive, IsString } from 'class-validator';
 import { Loan } from '../entities/loan.entity';
 
 export class CreateLoanDto {
@@ -10,6 +11,10 @@ export class CreateLoanDto {
     return loan;
   }
 
+  @IsString()
   applicantName: string;
+
+  @IsNumber()
+  @IsPositive()
   requestedAmount: number;
 }
