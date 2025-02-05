@@ -6,7 +6,7 @@ export enum LoanStatus {
   REJECTED = 'REJECTED',
 }
 
-@Entity()
+@Entity({ tableName: 'loans' })
 export class Loan {
   @PrimaryKey({ type: 'uuid', defaultRaw: 'gen_random_uuid()' })
   id: string;
