@@ -34,6 +34,10 @@ $ pnpm run start:dev
 $ pnpm run start:prod
 ```
 
+## Documentation
+
+Go to `/api` to access the Swagger documentation.
+
 ## Run tests
 
 ```bash
