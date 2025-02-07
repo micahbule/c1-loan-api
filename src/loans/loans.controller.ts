@@ -15,7 +15,7 @@ import { CreateLoanDto } from './dto/create-loan.dto';
 import { UpdateLoanDto } from './dto/update-loan.dto';
 import { FilterQuery } from '@mikro-orm/core';
 import { Loan } from './entities/loan.entity';
-import { NotFoundFilter } from 'src/common/not-found.filter';
+import { NotFoundFilter } from '../common/not-found.filter';
 
 @Controller('loans')
 export class LoansController {
