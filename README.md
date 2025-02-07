@@ -44,3 +44,7 @@ Go to `/api` to access the Swagger documentation.
 # unit tests
 $ pnpm run test
 ```
+
+## Extras
+
+- The `docker-compose.yml` file also comes with a [PGAdmin](https://www.pgadmin.org/) instance to browse the database accordingly. Default credentials are written in the file accordingly. You can use this to connect to the database using `db` as host.
