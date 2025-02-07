@@ -23,7 +23,11 @@ export class LoansService {
   }
 
   async find(query: FilterQuery<Loan> = {}) {
-    return await this.loanRepository.find(query);
+    return await this.loanRepository.find(query, {
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
   async findById(id: string) {
