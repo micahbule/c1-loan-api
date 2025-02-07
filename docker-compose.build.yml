@@ -1,0 +1,14 @@
+name: c1-api-instance
+
+services:
+  db:
+    extends:
+      file: docker-compose.yml
+      service: db
+
+  app:
+    build:
+      target: prod-build
+    restart: always
+    ports:
+      - 3001:3001
